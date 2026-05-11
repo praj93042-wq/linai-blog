@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 import alpinejs from '@astrojs/alpinejs';
 
 export default defineConfig({
-  site: 'https://linai.vercel.app',
+  site: 'https://linai-snowy.vercel.app',
   output: 'static',
   vite: {
     plugins: [tailwindcss()],

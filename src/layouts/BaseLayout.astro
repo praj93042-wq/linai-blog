@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { title, description = 'AI intelligence through every lens. Data-backed analysis, no hype.', ogImage, canonicalUrl } = Astro.props;
-const siteUrl = 'https://linai.vercel.app';
+const siteUrl = 'https://linai-snowy.vercel.app';
 const resolvedOg = ogImage ? `${siteUrl}${ogImage}` : `${siteUrl}/og-default.png`;
 const canonical = canonicalUrl || Astro.url.href;
 ---

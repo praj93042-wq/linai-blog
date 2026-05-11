@@ -1,0 +1,130 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import CategoryBadge from '../components/CategoryBadge.astro';
+import PestleTag from '../components/PestleTag.astro';
+import BigNumber from '../components/BigNumber.astro';
+import InfographicEmbed from '../components/InfographicEmbed.astro';
+import YouTubeEmbed from '../components/YouTubeEmbed.astro';
+import ShareButtons from '../components/ShareButtons.astro';
+import EmailCapture from '../components/EmailCapture.astro';
+import SourcesList from '../components/SourcesList.astro';
+import RelatedPosts from '../components/RelatedPosts.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  allPosts: CollectionEntry<'posts'>[];
+}
+
+const { post, allPosts } = Astro.props;
+const {
+  title, description, category, pestle,
+  published_at, updated_at, reading_time,
+  big_number, stats, infographic_path, sources, source_layers,
+  youtube_short_url, beehiiv_url, linkedin_url, x_thread_url,
+} = post.data;
+const slug = post.data.slug;
+
+const dateStr = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric', month: 'long', year: 'numeric',
+}).format(published_at);
+
+const updatedStr = updated_at
+  ? new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(updated_at)
+  : null;
+
+const postUrl = `https://linai.vercel.app/${slug}`;
+
+// JSON-LD structured data for SEO
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  url: postUrl,
+  datePublished: published_at.toISOString(),
+  dateModified: (updated_at ?? published_at).toISOString(),
+  author: { '@type': 'Organization', name: 'LinAI', url: 'https://linai.vercel.app' },
+  publisher: { '@type': 'Organization', name: 'LinAI', url: 'https://linai.vercel.app' },
+});
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={infographic_path ?? '/og-default.png'}
+  canonicalUrl={postUrl}
+>
+  <script type="application/ld+json" set:html={jsonLd} />
+
+  <article class="max-w-3xl mx-auto px-4 py-10">
+    <!-- Header -->
+    <header style="margin-bottom:2rem;">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:1rem;">
+        <CategoryBadge category={category} />
+        <PestleTag pestle={pestle} />
+      </div>
+
+      <h1 style="color:#F8FAFC;font-size:clamp(1.5rem,4vw,2.25rem);font-weight:700;line-height:1.2;margin:0 0 1rem 0;">
+        {title}
+      </h1>
+
+      <p style="color:#64748B;font-size:1rem;line-height:1.6;margin:0 0 1.25rem 0;">{description}</p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;font-size:0.8rem;color:#64748B;align-items:center;">
+        <span>{dateStr}</span>
+        {updatedStr && <span style="color:#334155;">Updated {updatedStr}</span>}
+        <span style="color:#334155;">·</span>
+        <span>{reading_time} min read</span>
+      </div>
+
+      <!-- Social proof links -->
+      {(x_thread_url || linkedin_url || beehiiv_url) && (
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:1rem;">
+          {x_thread_url && (
+            <a href={x_thread_url} target="_blank" rel="noopener"
+               style="font-size:0.75rem;color:#64748B;text-decoration:none;padding:3px 10px;border:1px solid #334155;border-radius:9999px;">
+              View thread ↗
+            </a>
+          )}
+          {linkedin_url && (
+            <a href={linkedin_url} target="_blank" rel="noopener"
+               style="font-size:0.75rem;color:#64748B;text-decoration:none;padding:3px 10px;border:1px solid #334155;border-radius:9999px;">
+              LinkedIn ↗
+            </a>
+          )}
+        </div>
+      )}
+    </header>
+
+    <!-- Big Number hero block -->
+    {big_number && (
+      <BigNumber value={big_number.value} label={big_number.label} context={big_number.context} />
+    )}
+
+    <!-- YouTube Short embed (if available) -->
+    {youtube_short_url && <YouTubeEmbed src={youtube_short_url} title={title} />}
+
+    <!-- Article body -->
+    <div class="prose prose-invert max-w-none" style="--tw-prose-invert-body:#CBD5E1;">
+      <slot />
+    </div>
+
+    <!-- Infographic -->
+    {(infographic_path || (stats && stats.length > 0)) && (
+      <InfographicEmbed src={infographic_path} alt={`${title} — by the numbers`} stats={stats} />
+    )}
+
+    <!-- Share buttons -->
+    <ShareButtons url={postUrl} title={title} />
+
+    <!-- Email capture for long-form -->
+    {post.data.form === 'long' && <EmailCapture />}
+
+    <!-- Sources -->
+    <SourcesList sources={sources} layers={source_layers} />
+
+    <!-- Related posts -->
+    <RelatedPosts current={post} all={allPosts} />
+  </article>
+</BaseLayout>

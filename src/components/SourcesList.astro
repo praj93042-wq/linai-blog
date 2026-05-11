@@ -1,0 +1,57 @@
+---
+interface Props {
+  sources: string[];
+  layers?: number[];
+}
+
+const { sources, layers = [] } = Astro.props;
+
+const LAYER_LABELS: Record<number, string> = {
+  1: 'L1',
+  2: 'L2',
+  3: 'L3',
+  4: 'L4',
+  5: 'L5',
+};
+const LAYER_COLORS: Record<number, string> = {
+  1: 'background-color:#312e81;color:#a5b4fc;',
+  2: 'background-color:#064e3b;color:#6ee7b7;',
+  3: 'background-color:#0c4a6e;color:#7dd3fc;',
+  4: 'background-color:#431407;color:#fdba74;',
+  5: 'background-color:#052e16;color:#86efac;',
+};
+---
+
+{sources.length > 0 && (
+  <div style="margin:2.5rem 0;padding-top:1.5rem;border-top:1px solid #334155;">
+    <p style="color:#64748B;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin:0 0 0.75rem 0;">Sources</p>
+    <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.4rem;">
+      {sources.map((src, i) => {
+        const layer = layers[i];
+        let domain = '';
+        try { domain = new URL(src).hostname.replace('www.',''); } catch {}
+        return (
+          <li style="display:flex;align-items:center;gap:8px;">
+            <span style="color:#334155;font-size:0.75rem;min-width:1.2rem;">{i + 1}.</span>
+            {layer && (
+              <span style={`font-size:0.62rem;font-weight:700;padding:1px 5px;border-radius:3px;${LAYER_COLORS[layer]}`}>
+                {LAYER_LABELS[layer]}
+              </span>
+            )}
+            <a
+              href={src}
+              target="_blank"
+              rel="noopener noreferrer"
+              style="color:#64748B;font-size:0.78rem;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;"
+              onmouseenter="this.style.color='#06B6D4';"
+              onmouseleave="this.style.color='#64748B';"
+              title={src}
+            >
+              {domain || src}
+            </a>
+          </li>
+        );
+      })}
+    </ol>
+  </div>
+)}

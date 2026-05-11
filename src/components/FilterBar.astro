@@ -1,0 +1,67 @@
+---
+const categories = [
+  { value: 'all', label: 'All' },
+  { value: 'research-breakdown', label: 'Research' },
+  { value: 'tool-analysis', label: 'Tools' },
+  { value: 'policy-watch', label: 'Policy' },
+  { value: 'market-intelligence', label: 'Markets' },
+  { value: 'opinion', label: 'Opinion' },
+  { value: 'weekly-roundup', label: 'Roundup' },
+  { value: 'deep-dive', label: 'Deep Dive' },
+];
+
+const pestles = [
+  'all', 'Political', 'Economic', 'Social',
+  'Technological', 'Legal', 'Environmental',
+];
+---
+
+<div
+  x-data=`{
+    cat: 'all',
+    pest: 'all',
+    filter() {
+      document.querySelectorAll('[data-post]').forEach(el => {
+        const c = el.getAttribute('data-category') || '';
+        const p = el.getAttribute('data-pestle') || '';
+        const ok = (this.cat === 'all' || c === this.cat) &&
+                   (this.pest === 'all' || p.includes(this.pest));
+        el.style.display = ok ? '' : 'none';
+      });
+    }
+  }`
+  x-init="filter()"
+  style="margin-bottom: 2rem;"
+>
+  <!-- Category pills -->
+  <div style="margin-bottom: 0.75rem;">
+    <p style="color:#64748B;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin:0 0 8px 0;">Category</p>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      {categories.map(({ value, label }) => (
+        <button
+          x-on:click={`cat='${value}'; filter()`}
+          x-bind:style={`cat==='${value}' ? 'background-color:#06B6D4;color:#0F172A;border-color:#06B6D4;' : 'background-color:transparent;color:#CBD5E1;border-color:#334155;'`}
+          style="padding:4px 12px;border-radius:9999px;font-size:0.75rem;font-weight:500;border:1px solid;cursor:pointer;transition:all 0.15s;"
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- PESTLE pills -->
+  <div>
+    <p style="color:#64748B;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin:0 0 8px 0;">PESTLE lens</p>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      {pestles.map((tag) => (
+        <button
+          x-on:click={`pest='${tag}'; filter()`}
+          x-bind:style={`pest==='${tag}' ? 'background-color:#06B6D4;color:#0F172A;border-color:#06B6D4;' : 'background-color:transparent;color:#CBD5E1;border-color:#334155;'`}
+          style="padding:4px 12px;border-radius:9999px;font-size:0.75rem;font-weight:500;border:1px solid;cursor:pointer;transition:all 0.15s;"
+        >
+          {tag === 'all' ? 'All' : tag}
+        </button>
+      ))}
+    </div>
+  </div>
+</div>

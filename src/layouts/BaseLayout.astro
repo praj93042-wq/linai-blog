@@ -1,0 +1,55 @@
+---
+import '../styles/global.css';
+import NavBar from '../components/NavBar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+}
+
+const { title, description = 'AI intelligence through every lens. Data-backed analysis, no hype.', ogImage, canonicalUrl } = Astro.props;
+const siteUrl = 'https://linai.vercel.app';
+const resolvedOg = ogImage ? `${siteUrl}${ogImage}` : `${siteUrl}/og-default.png`;
+const canonical = canonicalUrl || Astro.url.href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | LinAI</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="LinAI" href="/rss.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={`${title} | LinAI`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={resolvedOg} />
+    <meta property="og:site_name" content="LinAI" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@LinAI_io" />
+    <meta name="twitter:title" content={`${title} | LinAI`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOg} />
+
+    <!-- Plausible Analytics -->
+    <script defer data-domain="linai.vercel.app" src="https://plausible.io/js/script.js"></script>
+  </head>
+  <body class="flex flex-col min-h-screen" style="background-color: #0F172A; color: #F8FAFC;">
+    <NavBar />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

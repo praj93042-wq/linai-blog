@@ -1,0 +1,32 @@
+---
+import PostCard from './PostCard.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  current: CollectionEntry<'posts'>;
+  all: CollectionEntry<'posts'>[];
+}
+
+const { current, all } = Astro.props;
+
+const related = all
+  .filter((p) => p.data.slug !== current.data.slug)
+  .filter(
+    (p) =>
+      p.data.category === current.data.category ||
+      p.data.pestle.some((tag) => current.data.pestle.includes(tag))
+  )
+  .sort((a, b) => b.data.published_at.getTime() - a.data.published_at.getTime())
+  .slice(0, 3);
+---
+
+{related.length > 0 && (
+  <section style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #334155;">
+    <h3 style="color: #64748B; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 1rem 0;">
+      Related
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem;">
+      {related.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+)}

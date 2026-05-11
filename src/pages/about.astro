@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="LinAI is an AI intelligence publication. Research-grade sourcing, no hype.">
+  <article class="max-w-3xl mx-auto px-4 py-12">
+
+    <h1 style="color:#F8FAFC;font-size:2.25rem;font-weight:700;margin:0 0 1.5rem 0;">
+      About Lin<span style="color:#06B6D4;">AI</span>
+    </h1>
+
+    <p style="color:#CBD5E1;font-size:1rem;line-height:1.75;margin:0 0 1.25rem 0;">
+      LinAI is an AI intelligence publication built on one principle: every claim earns its place with a source.
+      We cover the full AI landscape — research breakthroughs, regulatory developments, market movements,
+      new tools, and societal implications — through a structured analytical lens.
+    </p>
+
+    <p style="color:#CBD5E1;font-size:1rem;line-height:1.75;margin:0 0 1.25rem 0;">
+      Every post is produced through a five-layer source system: technical researchers, independent analysts,
+      institutional press, video transcripts, and investor intelligence. Articles are scored on a 7-point
+      quality scale before any content is drafted. The author reviews the top-scoring sources and selects
+      what to build each piece on.
+    </p>
+
+    <p style="color:#CBD5E1;font-size:1rem;line-height:1.75;margin:0 0 2.5rem 0;">
+      LinAI is the content arm of the LinAI Systems parent brand.
+      <em style="color:#64748B;">"Linear solutions for complex intelligence."</em>
+    </p>
+
+    <div style="background-color:#1E293B;border:1px solid #334155;border-radius:0.75rem;padding:1.5rem;margin-bottom:2rem;">
+      <p style="color:#06B6D4;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 0.75rem 0;">What we cover</p>
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.4rem;">
+        {['Research Breakdown — new models, papers, and technical developments',
+          'Tool Analysis — new AI products reviewed and situated in the landscape',
+          'Policy Watch — regulation, governance, and AI law',
+          'Market Intelligence — investment, funding, and economic data',
+          'Opinion — data-backed takes on AI trends and debates',
+          'Deep Dives — long-form systemic analysis',
+          'Weekly Roundup — five key developments, every Sunday'].map((item) => (
+          <li style="color:#CBD5E1;font-size:0.875rem;display:flex;gap:0.5rem;">
+            <span style="color:#06B6D4;flex-shrink:0;">→</span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+      <a href="https://linai.beehiiv.com/subscribe" target="_blank" rel="noopener"
+         style="background-color:#06B6D4;color:#0F172A;font-weight:700;font-size:0.875rem;padding:10px 24px;border-radius:6px;text-decoration:none;">
+        Subscribe to the newsletter →
+      </a>
+      <a href="https://x.com/LinAI_io" target="_blank" rel="noopener"
+         style="background-color:transparent;border:1px solid #334155;color:#CBD5E1;font-size:0.875rem;padding:10px 24px;border-radius:6px;text-decoration:none;">
+        Follow on X
+      </a>
+    </div>
+  </article>
+</BaseLayout>

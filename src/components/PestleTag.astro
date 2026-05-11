@@ -1,0 +1,27 @@
+---
+interface Props {
+  pestle: string[];
+}
+
+const { pestle } = Astro.props;
+
+const COLORS: Record<string, string> = {
+  Political:     'background-color:#1e1b4b;color:#a5b4fc;',
+  Economic:      'background-color:#052e16;color:#86efac;',
+  Social:        'background-color:#431407;color:#fdba74;',
+  Technological: 'background-color:#0c4a6e;color:#7dd3fc;',
+  Legal:         'background-color:#450a0a;color:#fca5a5;',
+  Environmental: 'background-color:#1a2e05;color:#86efac;',
+};
+---
+
+<div style="display:flex;flex-wrap:wrap;gap:4px;">
+  {pestle.map((tag) => (
+    <a
+      href={`/pestle/${tag.toLowerCase()}`}
+      style={`display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.68rem;font-weight:500;text-decoration:none;${COLORS[tag] ?? 'background-color:#1E293B;color:#CBD5E1;'}`}
+    >
+      {tag}
+    </a>
+  ))}
+</div>

@@ -1,0 +1,33 @@
+---
+interface Props {
+  src?: string;
+  alt?: string;
+  stats?: Array<{ value: string; label: string }>;
+}
+
+const { src, alt = 'Infographic', stats = [] } = Astro.props;
+---
+
+{src ? (
+  <figure style="margin:2rem 0;text-align:center;">
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      style="max-width:100%;border-radius:0.75rem;border:1px solid #334155;"
+    />
+  </figure>
+) : stats.length > 0 ? (
+  <!-- HTML stat grid fallback -->
+  <div style="background-color:#1E293B;border:1px solid #334155;border-radius:0.75rem;padding:1.5rem;margin:2rem 0;">
+    <p style="color:#06B6D4;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 1rem 0;">By the Numbers</p>
+    <div style={`display:grid;grid-template-columns:repeat(${Math.min(stats.length, 3)},1fr);gap:1rem;`}>
+      {stats.map(({ value, label }) => (
+        <div style="background-color:#0F172A;border:1px solid #334155;border-radius:0.5rem;padding:1rem;text-align:center;">
+          <p style="color:#06B6D4;font-size:1.75rem;font-weight:700;margin:0 0 4px 0;">{value}</p>
+          <p style="color:#CBD5E1;font-size:0.75rem;margin:0;line-height:1.4;">{label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+) : null}

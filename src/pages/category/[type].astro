@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const categories = [
+    'research-breakdown','tool-analysis','policy-watch',
+    'market-intelligence','opinion','weekly-roundup','deep-dive',
+  ];
+  return categories.map((type) => ({ params: { type } }));
+}
+
+const LABELS: Record<string, string> = {
+  'research-breakdown': 'Research Breakdown',
+  'tool-analysis': 'Tool Analysis',
+  'policy-watch': 'Policy Watch',
+  'market-intelligence': 'Market Intelligence',
+  'opinion': 'Opinion',
+  'weekly-roundup': 'Weekly Roundup',
+  'deep-dive': 'Deep Dive',
+};
+
+const { type } = Astro.params;
+const label = LABELS[type] ?? type;
+
+const allPosts = await getCollection('posts');
+const filtered = allPosts
+  .filter((p) => p.data.category === type)
+  .sort((a, b) => b.data.published_at.getTime() - a.data.published_at.getTime());
+---
+
+<BaseLayout title={label} description={`All ${label} posts on LinAI.`}>
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <div style="margin-bottom:2rem;">
+      <a href="/" style="color:#64748B;font-size:0.8rem;text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-bottom:1rem;">
+        ← All posts
+      </a>
+      <h1 style="color:#F8FAFC;font-size:2rem;font-weight:700;margin:0 0 0.5rem 0;">{label}</h1>
+      <p style="color:#64748B;font-size:0.875rem;margin:0;">{filtered.length} {filtered.length === 1 ? 'post' : 'posts'}</p>
+    </div>
+
+    {filtered.length > 0 ? (
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;">
+        {filtered.map((post) => <PostCard post={post} />)}
+      </div>
+    ) : (
+      <p style="color:#64748B;text-align:center;padding:3rem 0;">No posts yet in this category.</p>
+    )}
+  </section>
+</BaseLayout>

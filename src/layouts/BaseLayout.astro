@@ -42,8 +42,11 @@ const canonical = canonicalUrl || Astro.url.href;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={resolvedOg} />
 
+    <!-- Google Search Console — uncomment and replace code after verifying ownership -->
+    <!-- <meta name="google-site-verification" content="PASTE_YOUR_VERIFICATION_CODE_HERE" /> -->
+
     <!-- Plausible Analytics -->
-    <script defer data-domain="linai.vercel.app" src="https://plausible.io/js/script.js"></script>
+    <script defer data-domain="linai-snowy.vercel.app" src="https://plausible.io/js/script.js"></script>
   </head>
   <body class="flex flex-col min-h-screen" style="background-color: #0F172A; color: #F8FAFC;">
     <NavBar />

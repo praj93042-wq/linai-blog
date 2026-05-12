@@ -1,5 +1,5 @@
 ---
-title: "300 Million Jobs, 170 Million Created: What the AI Workforce Data Actually Shows"
+title: "The AI Jobs Paradox: 300M Exposed, 170M Created, and Why the Net Math Doesn't Comfort Anyone"
 slug: d-001-ai-workforce-impact
 edition_label: "D-001"
 category: deep-dive

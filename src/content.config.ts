@@ -8,6 +8,7 @@ const PestleEnum = z.enum([
   'Technological',
   'Legal',
   'Environmental',
+  'Practical',
 ]);
 
 const CategoryEnum = z.enum([
@@ -18,6 +19,7 @@ const CategoryEnum = z.enum([
   'opinion',
   'weekly-roundup',
   'deep-dive',
+  'practical-playbook',
 ]);
 
 const posts = defineCollection({

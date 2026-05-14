@@ -7,6 +7,7 @@ export async function getStaticPaths() {
   const categories = [
     'research-breakdown','tool-analysis','policy-watch',
     'market-intelligence','opinion','weekly-roundup','deep-dive',
+    'practical-playbook',
   ];
   return categories.map((type) => ({ params: { type } }));
 }
@@ -19,6 +20,7 @@ const LABELS: Record<string, string> = {
   'opinion': 'Opinion',
   'weekly-roundup': 'Weekly Roundup',
   'deep-dive': 'Deep Dive',
+  'practical-playbook': 'Practical Playbook',
 };
 
 const { type } = Astro.params;

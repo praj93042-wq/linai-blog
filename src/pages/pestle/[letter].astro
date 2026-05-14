@@ -4,7 +4,7 @@ import PostCard from '../../components/PostCard.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const letters = ['political','economic','social','technological','legal','environmental'];
+  const letters = ['political','economic','social','technological','legal','environmental','practical'];
   return letters.map((letter) => ({ params: { letter } }));
 }
 

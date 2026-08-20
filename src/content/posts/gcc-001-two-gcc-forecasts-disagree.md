@@ -3,6 +3,7 @@ title: "India's Two GCC Forecasts Disagree by 6x. The Cause May Be Definitional.
 slug: gcc-001-two-gcc-forecasts-disagree
 edition_label: "GCC-001"
 category: market-intelligence
+beat: gcc
 pestle:
   - Economic
   - Political

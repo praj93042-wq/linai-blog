@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+// Beats are the topic dimension, orthogonal to `category` (which describes form).
+// A post can be both "Markets" and "GCC".
+export async function getStaticPaths() {
+  return ['gcc', 'hr', 'hiring'].map((beat) => ({ params: { beat } }));
+}
+
+const LABELS: Record<string, string> = {
+  gcc: 'GCC',
+  hr: 'HR',
+  hiring: 'Hiring',
+};
+
+const BLURBS: Record<string, string> = {
+  gcc: "India's Global Capability Centres — openings, policy, leadership and the talent underneath the growth.",
+  hr: 'The India people function — leadership moves, labour codes and workplace policy.',
+  hiring: 'Recruitment, freshers, attrition and compensation across the Indian market.',
+};
+
+const { beat } = Astro.params;
+const label = LABELS[beat] ?? beat;
+
+const allPosts = await getCollection('posts');
+const filtered = allPosts
+  .filter((p) => p.data.beat === beat)
+  .sort((a, b) => b.data.published_at.getTime() - a.data.published_at.getTime());
+---
+
+<BaseLayout title={label} description={BLURBS[beat] ?? `All ${label} posts on LinAI.`}>
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <div style="margin-bottom:2rem;">
+      <a href="/" style="color:#64748B;font-size:0.8rem;text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-bottom:1rem;">
+        ← All posts
+      </a>
+      <h1 style="color:#F8FAFC;font-size:2rem;font-weight:700;margin:0 0 0.5rem 0;">{label}</h1>
+      <p style="color:#94A3B8;font-size:0.9375rem;margin:0 0 0.5rem 0;max-width:44rem;line-height:1.5;">{BLURBS[beat]}</p>
+      <p style="color:#64748B;font-size:0.875rem;margin:0;">{filtered.length} {filtered.length === 1 ? 'post' : 'posts'}</p>
+    </div>
+
+    {filtered.length > 0 ? (
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;">
+        {filtered.map((post) => <PostCard post={post} />)}
+      </div>
+    ) : (
+      <p style="color:#64748B;text-align:center;padding:3rem 0;">No posts yet in this beat.</p>
+    )}
+  </section>
+</BaseLayout>

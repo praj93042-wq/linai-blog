@@ -1,5 +1,11 @@
 ---
+// Two dimensions share this bar. `/beat/*` is topic (GCC, HR, hiring) and leads,
+// since it is the publication's focus. `/category/*` is form (research, opinion,
+// markets). A post can appear under one of each.
+// To add HR or Hiring later: { label: 'HR', href: '/beat/hr' } — the page and
+// schema already support them.
 const categories = [
+  { label: 'GCC', href: '/beat/gcc' },
   { label: 'Research', href: '/category/research-breakdown' },
   { label: 'Tools', href: '/category/tool-analysis' },
   { label: 'Policy', href: '/category/policy-watch' },

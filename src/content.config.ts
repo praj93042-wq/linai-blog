@@ -22,6 +22,10 @@ const CategoryEnum = z.enum([
   'practical-playbook',
 ]);
 
+// Topic beat, orthogonal to `category` (which describes form: research, opinion,
+// markets...). Optional so the pre-2026-08 AI archive stays valid untouched.
+const BeatEnum = z.enum(['gcc', 'hr', 'hiring']);
+
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
   schema: z.object({
@@ -29,6 +33,7 @@ const posts = defineCollection({
     slug: z.string().regex(/^[a-z0-9-]+$/),
     edition_label: z.string(),
     category: CategoryEnum,
+    beat: BeatEnum.optional(),
     pestle: z.array(PestleEnum),
     form: z.enum(['short', 'long']),
     published_at: z.coerce.date(),

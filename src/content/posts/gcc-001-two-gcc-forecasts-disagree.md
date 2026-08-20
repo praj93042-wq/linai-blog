@@ -33,15 +33,15 @@ stats:
     label: "CBRE's 2030 projection"
   - value: "2,500+"
     label: "JLL's 2030 projection"
-  - value: "19.32%"
-    label: "GCC value at risk from skill gaps by 2030 (PwC-FICCI)"
+  - value: "8.69 months"
+    label: "Average time for a GCC new hire to reach full productivity (PwC-FICCI)"
   - value: "1,380"
     label: "New GCCs targeted by seven states by 2031"
 ---
 
 ## Context
 
-Seven Indian states are now bidding for Global Capability Centres with formal policy, and the union government is finalising a national framework to sit above them. In the same week, PwC India and FICCI estimated that skill gaps place 19.32% of India's GCC sector value at risk by 2030. Those two developments belong in the same sentence more often than they appear in one.
+Seven Indian states are now bidding for Global Capability Centres with formal policy, and the union government is finalising a national framework to sit above them. In the same week, PwC India and FICCI estimated that skill gaps could place 19.32% of India's GCC sector value at risk by 2030 — a survey of 200 senior GCC executives across eight industries, though the study defines that base only as "total sector value or revenue" and gives no figure for it. Those two developments belong in the same sentence more often than they appear in one.
 
 ## Policy moved on three levels at once
 
